@@ -12,7 +12,6 @@ import { el } from "./dom";
 import { TERRAIN_NAMES } from "./terrain";
 import { endHeadline, headline } from "./news";
 import { NewsQueue } from "./newsQueue";
-import { renderFronts } from "./fronts";
 import { cityMarkers } from "./cityMarkers";
 import { mapOptions, mapOptionToggles } from "./mapOptions";
 import { MajorNewsQueue, majorHeadline } from "./majorNews";
@@ -41,8 +40,6 @@ export interface ObserveOptions {
 }
 
 /** Observation screen: plays the simulation back automatically; the player only watches. */
-/** Real-time interval between rebuilds of the fronts panel. */
-const FRONTS_REFRESH_MS = 250;
 
 export class ObserveScreen {
   readonly root: HTMLElement;
@@ -54,9 +51,6 @@ export class ObserveScreen {
   private speedInput: HTMLInputElement;
   private speedLabel: HTMLElement;
   private victoryEl: HTMLElement;
-  private frontsEl: HTMLElement;
-  private frontsTick = -1;
-  private frontsAt = -Infinity;
   private logEl: HTMLOListElement;
   private tooltip: HTMLElement;
   private banner: HTMLElement;
@@ -121,7 +115,6 @@ export class ObserveScreen {
     this.newsNext.onclick = () => { this.newsQueue.next(performance.now()); this.renderNews(); };
     if (scenario.openingNews) this.enqueueNews(sim.config.startDate, scenario.openingNews);
     this.victoryEl = el("div", { class: "victory" });
-    this.frontsEl = el("div", { class: "fronts" });
     this.logEl = el("ol", { class: "event-log" }) as HTMLOListElement;
     const milBox = el("div", { class: "chart" }), navyBox = el("div", { class: "chart" }), indBox = el("div", { class: "chart" });
 
@@ -146,7 +139,6 @@ export class ObserveScreen {
         ),
         el("aside", { class: "obs-side" },
           el("section", { class: "panel" }, el("h2", {}, "勝利条件の進捗"), this.victoryEl),
-          el("section", { class: "panel fronts-panel" }, el("h2", {}, "戦線の陸軍"), this.frontsEl),
           el("section", { class: "panel charts" }, milBox, navyBox, indBox),
           el("section", { class: "panel log-panel" }, el("h2", {}, "イベントログ"), this.logEl),
         ),
@@ -270,13 +262,6 @@ export class ObserveScreen {
     const sim = this.sim;
     this.dateEl.textContent = formatDateJa(this.currentDate());
     this.renderVictory();
-    // Fronts: rebuilt at most every FRONTS_REFRESH_MS of real time (the list is read, not animated), and at the end.
-    const now = performance.now();
-    if (this.sim.tick !== this.frontsTick && (now - this.frontsAt >= FRONTS_REFRESH_MS || this.sim.result)) {
-      this.frontsTick = this.sim.tick;
-      this.frontsAt = now;
-      this.frontsEl.replaceChildren(...renderFronts(this.sim));
-    }
     const h = sim.history;
     this.charts.military.draw([
       { label: FACTION_NAMES.axis, color: FACTION_COLORS.axis, values: h.map((x) => x.military.axis) },

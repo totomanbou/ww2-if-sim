@@ -58,6 +58,7 @@ const MAX_FRONTS = 8;
 /** Lines with less army in total are left out (stray contacts, isolated islands). */
 const MIN_TOTAL = 0.5;
 
+// Not shown at present: the observe screen's fronts panel was removed on 2026-10-25 (user requirement).
 /**
  * Panel content: per front line, the land army of each country with its flag, axis above allies, and a bar of the
  * two sides' shares (user requirement: show how much land army is on which front, with flags).

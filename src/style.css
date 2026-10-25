@@ -270,7 +270,7 @@ input.changed, select.changed { border-color: var(--accent); color: var(--accent
 
 span.flag { display: inline-flex; vertical-align: middle; }
 
-/* Fronts panel (observe): land army per front line with flags. */
+/* Fronts panel: land army per front line with flags (src/ui/fronts.ts; removed from the observe screen on 2026-10-25 at the user's request, kept for reuse). */
 .fronts { display: flex; flex-direction: column; gap: 8px; }
 .front { display: flex; flex-direction: column; gap: 2px; font-size: 12px; }
 .front-head { display: flex; gap: 6px; align-items: baseline; }
