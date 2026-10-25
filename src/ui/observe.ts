@@ -324,8 +324,8 @@ export class ObserveScreen {
     const sim = this.sim;
     const cell = (c: VictoryCity) => {
       const fallen = isFallen(sim, c);
-      return el("span", { class: `city ${fallen ? "fallen" : ""}`, title: fallen ? "陥落" : "保持" },
-        CITY_NAMES[c], el("b", {}, fallen ? "陥落" : "保持"));
+      return el("span", { class: `city ${fallen ? "fallen" : ""}`, title: fallen ? "陥落" : "未陥落" },
+        CITY_NAMES[c], el("b", {}, fallen ? "陥落" : "未陥落"));
     };
     const parisAxis = sim.faction[sim.owner[sim.cities.Paris]] === "axis";
     const weeks = sim.axisBWeeks, need = sim.config.axisBWeeks;
