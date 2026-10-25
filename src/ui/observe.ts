@@ -322,10 +322,11 @@ export class ObserveScreen {
 
   private renderVictory() {
     const sim = this.sim;
-    const cell = (c: VictoryCity) => {
+    const cell = (c: VictoryCity, labels: [string, string] = ["陥落", "未陥落"]) => {
       const fallen = isFallen(sim, c);
-      return el("span", { class: `city ${fallen ? "fallen" : ""}`, title: fallen ? "陥落" : "未陥落" },
-        CITY_NAMES[c], el("b", {}, fallen ? "陥落" : "未陥落"));
+      const status = labels[fallen ? 0 : 1];
+      return el("span", { class: `city ${fallen ? "fallen" : ""}`, title: status },
+        CITY_NAMES[c], el("b", {}, status));
     };
     const parisAxis = sim.faction[sim.owner[sim.cities.Paris]] === "axis";
     const weeks = sim.axisBWeeks, need = sim.config.axisBWeeks;
@@ -333,12 +334,12 @@ export class ObserveScreen {
     const t = victoryTargets(sim);
     const alliedCountries = alliedVictoryCountries(sim);
     const cities = (list: VictoryCity[]) =>
-      el("div", { class: "vc-cities" }, ...(list.length ? list.map(cell) : [el("span", { class: "hint" }, "対象の都市なし(成立しない)")]));
+      el("div", { class: "vc-cities" }, ...(list.length ? list.map((c) => cell(c)) : [el("span", { class: "hint" }, "対象の都市なし(成立しない)")]));
     this.victoryEl.replaceChildren(
       el("div", { class: "vc" }, el("div", { class: "vc-name axis" }, "枢軸 A"), cities(t.axisA)),
       el("div", { class: "vc" }, el("div", { class: "vc-name axis" }, "枢軸 B"),
         ...(t.axisB ? [
-          el("div", { class: "vc-cities" }, cell("Moscow"),
+          el("div", { class: "vc-cities" }, cell("Moscow", ["保持", "未保持"]),
             el("span", { class: `city ${parisAxis ? "fallen" : ""}` }, "パリ", el("b", {}, parisAxis ? "枢軸が保持" : "未保持")),
             // Capitals the Axis must also hold (config.axisBCapitals: Chongqing).
             ...t.axisBCapitals.map((c) => {
