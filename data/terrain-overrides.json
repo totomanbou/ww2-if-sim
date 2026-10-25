@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "id": "leningrad-hinterland",
+      "name": "レニングラード東方〜アルハンゲリスク方面の奥地",
+      "owners": ["SOV"],
+      "boxes": [[31, 59, 55, 68]],
+      "onlyFrom": [0],
+      "terrain": 2
+    },
+    {
+      "id": "ukraine",
+      "name": "ウクライナ全域（クリミア・西部を含む）",
+      "geometry": "terrain-regions/ukraine.geojson",
+      "geometryMode": "intersects",
+      "terrain": 0
+    }
+  ]
+}

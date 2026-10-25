@@ -1,0 +1,1340 @@
+{
+ "name": "史実プリセット(1939年9月)",
+ "seed": 1948,
+ "openingNews": "【速報】ドイツがポーランドに宣戦布告 第二次世界大戦開戦か",
+ "countries": {
+  "USA": {
+   "name": "アメリカ合衆国",
+   "color": "#4a9a8f",
+   "faction": "allies",
+   "industry": 100.0,
+   "shipbuilding": 82.3,
+   "stability": 0.9,
+   "navy": 105.3,
+   "formalName": "アメリカ合衆国"
+  },
+  "GER": {
+   "name": "ドイツ",
+   "color": "#6e6e6e",
+   "faction": "axis",
+   "industry": 42.2,
+   "shipbuilding": 14.6,
+   "stability": 0.95,
+   "navy": 20.2,
+   "formalName": "ドイツ国"
+  },
+  "SOV": {
+   "name": "ソ連",
+   "color": "#a83a3a",
+   "faction": "allies",
+   "industry": 36.8,
+   "shipbuilding": 5.1,
+   "stability": 0.8,
+   "navy": 32.6,
+   "formalName": "ソビエト連邦"
+  },
+  "UK": {
+   "name": "イギリス",
+   "color": "#d27878",
+   "faction": "allies",
+   "industry": 50.0,
+   "shipbuilding": 26.5,
+   "stability": 0.9,
+   "navy": 129.0,
+   "formalName": "イギリス"
+  },
+  "IND": {
+   "name": "インド",
+   "color": "#e3a857",
+   "faction": "allies",
+   "industry": 2.6,
+   "shipbuilding": 0.3,
+   "stability": 0.6,
+   "navy": 1.0,
+   "overlord": "UK",
+   "formalName": "英領インド"
+  },
+  "FRA": {
+   "name": "フランス",
+   "color": "#4f6fb8",
+   "faction": "allies",
+   "industry": 21.7,
+   "shipbuilding": 8.1,
+   "stability": 0.6,
+   "navy": 51.8,
+   "formalName": "フランス共和国"
+  },
+  "FFR": {
+   "name": "自由フランス",
+   "color": "#2f6fb5",
+   "faction": "allies",
+   "industry": 2.0,
+   "shipbuilding": 0.3,
+   "stability": 0.8,
+   "navy": 0,
+   "overlord": "FRA"
+  },
+  "JAP": {
+   "name": "日本",
+   "color": "#d2b84e",
+   "faction": "axis",
+   "industry": 22.8,
+   "shipbuilding": 20.8,
+   "stability": 0.9,
+   "navy": 101.2,
+   "formalName": "大日本帝国"
+  },
+  "ITA": {
+   "name": "イタリア",
+   "color": "#4f8f4a",
+   "faction": "axis",
+   "industry": 13.5,
+   "shipbuilding": 8.1,
+   "stability": 0.7,
+   "navy": 44.5,
+   "formalName": "イタリア王国"
+  },
+  "CHN": {
+   "name": "中国",
+   "color": "#e0a870",
+   "faction": "allies",
+   "industry": 8.0,
+   "shipbuilding": 0.3,
+   "stability": 0.4,
+   "formalName": "中華民国"
+  },
+  "POL": {
+   "name": "ポーランド",
+   "color": "#d98fb0",
+   "faction": "allies",
+   "industry": 4.8,
+   "shipbuilding": 0.3,
+   "stability": 0.7,
+   "navy": 2.4,
+   "formalName": "ポーランド共和国"
+  },
+  "CAN": {
+   "name": "カナダ",
+   "color": "#b85050",
+   "faction": "allies",
+   "industry": 5.1,
+   "shipbuilding": 4.8,
+   "stability": 0.85,
+   "navy": 1.2,
+   "overlord": "UK"
+  },
+  "AST": {
+   "name": "オーストラリア",
+   "color": "#c8845a",
+   "faction": "allies",
+   "industry": 3.7,
+   "shipbuilding": 0.8,
+   "stability": 0.85,
+   "navy": 4.9,
+   "overlord": "UK"
+  },
+  "NZL": {
+   "name": "ニュージーランド",
+   "color": "#c09090",
+   "faction": "allies",
+   "industry": 0.9,
+   "shipbuilding": 0.3,
+   "stability": 0.85,
+   "navy": 1.2,
+   "overlord": "UK"
+  },
+  "SAF": {
+   "name": "南アフリカ",
+   "color": "#a8785a",
+   "faction": "allies",
+   "industry": 1.3,
+   "shipbuilding": 0.2,
+   "stability": 0.7,
+   "navy": 0.1,
+   "formalName": "南アフリカ連邦",
+   "overlord": "UK"
+  },
+  "HOL": {
+   "name": "オランダ",
+   "color": "#e89a3a",
+   "faction": "allies",
+   "industry": 4.5,
+   "shipbuilding": 1.0,
+   "stability": 0.8,
+   "navy": 2.0,
+   "formalName": "オランダ王国"
+  },
+  "NEI": {
+   "name": "オランダ領東インド",
+   "color": "#c47f2c",
+   "faction": "allies",
+   "industry": 2.6,
+   "shipbuilding": 0.5,
+   "stability": 0.7,
+   "navy": 4.5,
+   "overlord": "HOL"
+  },
+  "BEL": {
+   "name": "ベルギー",
+   "color": "#c9bd5a",
+   "faction": "allies",
+   "industry": 4.0,
+   "shipbuilding": 0.2,
+   "stability": 0.7,
+   "formalName": "ベルギー王国"
+  },
+  "LUX": {
+   "name": "ルクセンブルク",
+   "color": "#8fb0d0",
+   "faction": "allies",
+   "industry": 0.3,
+   "shipbuilding": 0,
+   "stability": 0.8,
+   "formalName": "ルクセンブルク大公国"
+  },
+  "DEN": {
+   "name": "デンマーク",
+   "color": "#a8c0e0",
+   "faction": "allies",
+   "industry": 2.0,
+   "shipbuilding": 0.3,
+   "stability": 0.8,
+   "navy": 1.6,
+   "formalName": "デンマーク王国"
+  },
+  "NOR": {
+   "name": "ノルウェー",
+   "color": "#7f96c0",
+   "faction": "allies",
+   "industry": 1.3,
+   "shipbuilding": 0.8,
+   "stability": 0.8,
+   "navy": 3.2,
+   "formalName": "ノルウェー王国"
+  },
+  "GRE": {
+   "name": "ギリシャ",
+   "color": "#7fc0e0",
+   "faction": "allies",
+   "industry": 1.1,
+   "shipbuilding": 0.5,
+   "stability": 0.6,
+   "navy": 4.0,
+   "formalName": "ギリシャ王国"
+  },
+  "YUG": {
+   "name": "ユーゴスラビア",
+   "color": "#9a88b8",
+   "faction": "allies",
+   "industry": 1.4,
+   "shipbuilding": 0.3,
+   "stability": 0.5,
+   "navy": 2.4,
+   "formalName": "ユーゴスラビア王国"
+  },
+  "HUN": {
+   "name": "ハンガリー",
+   "color": "#8a6f4d",
+   "faction": "axis",
+   "industry": 1.8,
+   "shipbuilding": 0,
+   "stability": 0.7,
+   "formalName": "ハンガリー王国"
+  },
+  "ROM": {
+   "name": "ルーマニア",
+   "color": "#b89a3a",
+   "faction": "axis",
+   "industry": 1.5,
+   "shipbuilding": 0.3,
+   "stability": 0.5,
+   "navy": 1.6,
+   "formalName": "ルーマニア王国"
+  },
+  "BUL": {
+   "name": "ブルガリア",
+   "color": "#6f8f5a",
+   "faction": "axis",
+   "industry": 0.6,
+   "shipbuilding": 0.1,
+   "stability": 0.6,
+   "formalName": "ブルガリア王国"
+  },
+  "SLO": {
+   "name": "スロバキア",
+   "color": "#93ad8a",
+   "faction": "axis",
+   "industry": 0.4,
+   "shipbuilding": 0,
+   "stability": 0.6,
+   "formalName": "スロバキア共和国"
+  },
+  "FIN": {
+   "name": "フィンランド",
+   "color": "#c8c8dc",
+   "faction": "axis",
+   "industry": 0.8,
+   "shipbuilding": 0.3,
+   "stability": 0.85,
+   "navy": 1.6,
+   "formalName": "フィンランド共和国"
+  },
+  "SIA": {
+   "name": "タイ",
+   "color": "#b07ac0",
+   "faction": "axis",
+   "industry": 0.5,
+   "shipbuilding": 0.3,
+   "stability": 0.6,
+   "navy": 1.6,
+   "formalName": "タイ王国"
+  },
+  "SWE": {
+   "name": "スウェーデン",
+   "color": "#c8b0ba",
+   "faction": "neutral",
+   "industry": 3.0,
+   "shipbuilding": 1,
+   "stability": 0.85,
+   "navy": 7.3
+  },
+  "SWI": {
+   "name": "スイス",
+   "color": "#b3c8b0",
+   "faction": "neutral",
+   "industry": 2.1,
+   "shipbuilding": 0,
+   "stability": 0.9
+  },
+  "SPA": {
+   "name": "スペイン",
+   "color": "#b4b0c8",
+   "faction": "neutral",
+   "industry": 2.9,
+   "shipbuilding": 1,
+   "stability": 0.5,
+   "navy": 8.9
+  },
+  "POR": {
+   "name": "ポルトガル",
+   "color": "#c8bbb0",
+   "faction": "neutral",
+   "industry": 0.8,
+   "shipbuilding": 0.4,
+   "stability": 0.7,
+   "navy": 3.2
+  },
+  "IRE": {
+   "name": "アイルランド",
+   "color": "#b0c8c2",
+   "faction": "neutral",
+   "industry": 0.8,
+   "shipbuilding": 0,
+   "stability": 0.8
+  },
+  "TUR": {
+   "name": "トルコ",
+   "color": "#c8b0c7",
+   "faction": "neutral",
+   "industry": 1.6,
+   "shipbuilding": 0.5,
+   "stability": 0.7,
+   "navy": 4.9
+  },
+  "EST": {
+   "name": "エストニア",
+   "color": "#c0c8b0",
+   "faction": "neutral",
+   "industry": 0.2,
+   "shipbuilding": 0.1,
+   "stability": 0.7
+  },
+  "LAT": {
+   "name": "ラトビア",
+   "color": "#b0b9c8",
+   "faction": "neutral",
+   "industry": 0.3,
+   "shipbuilding": 0.1,
+   "stability": 0.7
+  },
+  "LIT": {
+   "name": "リトアニア",
+   "color": "#c8b0b2",
+   "faction": "neutral",
+   "industry": 0.3,
+   "shipbuilding": 0.05,
+   "stability": 0.7
+  },
+  "IRN": {
+   "name": "イラン",
+   "color": "#b0c8b5",
+   "faction": "neutral",
+   "industry": 0.5,
+   "shipbuilding": 0.1,
+   "stability": 0.6
+  },
+  "AFG": {
+   "name": "アフガニスタン",
+   "color": "#bcb0c8",
+   "faction": "neutral",
+   "industry": 0.1,
+   "shipbuilding": 0,
+   "stability": 0.5
+  },
+  "SAU": {
+   "name": "サウジアラビア",
+   "color": "#c8c3b0",
+   "faction": "neutral",
+   "industry": 0.1,
+   "shipbuilding": 0,
+   "stability": 0.6
+  },
+  "YEM": {
+   "name": "イエメン",
+   "color": "#b0c6c8",
+   "faction": "neutral",
+   "industry": 0.05,
+   "shipbuilding": 0,
+   "stability": 0.5
+  },
+  "NEP": {
+   "name": "ネパール",
+   "color": "#c8b0bf",
+   "faction": "neutral",
+   "industry": 0.1,
+   "shipbuilding": 0,
+   "stability": 0.6
+  },
+  "BHU": {
+   "name": "ブータン",
+   "color": "#b8c8b0",
+   "faction": "neutral",
+   "industry": 0.02,
+   "shipbuilding": 0,
+   "stability": 0.6
+  },
+  "MON": {
+   "name": "モンゴル",
+   "color": "#b0b1c8",
+   "faction": "neutral",
+   "industry": 0.1,
+   "shipbuilding": 0,
+   "stability": 0.6
+  },
+  "TIB": {
+   "name": "チベット",
+   "color": "#c8b6b0",
+   "faction": "neutral",
+   "industry": 0.05,
+   "shipbuilding": 0,
+   "stability": 0.5
+  },
+  "LBR": {
+   "name": "リベリア",
+   "color": "#b0c8bd",
+   "faction": "neutral",
+   "industry": 0.05,
+   "shipbuilding": 0,
+   "stability": 0.5
+  },
+  "MEX": {
+   "name": "メキシコ",
+   "color": "#c4b0c8",
+   "faction": "neutral",
+   "industry": 1.9,
+   "shipbuilding": 0.2,
+   "stability": 0.6
+  },
+  "BRA": {
+   "name": "ブラジル",
+   "color": "#c5c8b0",
+   "faction": "neutral",
+   "industry": 3.1,
+   "shipbuilding": 0.6,
+   "stability": 0.6,
+   "navy": 4.9
+  },
+  "ARG": {
+   "name": "アルゼンチン",
+   "color": "#b0bec8",
+   "faction": "neutral",
+   "industry": 3.9,
+   "shipbuilding": 0.8,
+   "stability": 0.6,
+   "navy": 8.9
+  },
+  "CHL": {
+   "name": "チリ",
+   "color": "#c8b0b7",
+   "faction": "neutral",
+   "industry": 0.8,
+   "shipbuilding": 0.5,
+   "stability": 0.6,
+   "navy": 5.7
+  },
+  "COL": {
+   "name": "コロンビア",
+   "color": "#b0c8b0",
+   "faction": "neutral",
+   "industry": 0.7,
+   "shipbuilding": 0.1,
+   "stability": 0.6
+  },
+  "VEN": {
+   "name": "ベネズエラ",
+   "color": "#b7b0c8",
+   "faction": "neutral",
+   "industry": 0.6,
+   "shipbuilding": 0.1,
+   "stability": 0.6
+  },
+  "PER": {
+   "name": "ペルー",
+   "color": "#c8beb0",
+   "faction": "neutral",
+   "industry": 0.4,
+   "shipbuilding": 0.2,
+   "stability": 0.6
+  },
+  "CUB": {
+   "name": "キューバ",
+   "color": "#b0c8c5",
+   "faction": "neutral",
+   "industry": 0.3,
+   "shipbuilding": 0.1,
+   "stability": 0.6
+  },
+  "URU": {
+   "name": "ウルグアイ",
+   "color": "#c8b0c4",
+   "faction": "neutral",
+   "industry": 0.3,
+   "shipbuilding": 0.1,
+   "stability": 0.7
+  },
+  "BOL": {
+   "name": "ボリビア",
+   "color": "#bdc8b0",
+   "faction": "neutral",
+   "industry": 0.1,
+   "shipbuilding": 0,
+   "stability": 0.5
+  },
+  "PAR": {
+   "name": "パラグアイ",
+   "color": "#b0b6c8",
+   "faction": "neutral",
+   "industry": 0.1,
+   "shipbuilding": 0,
+   "stability": 0.5
+  },
+  "ECU": {
+   "name": "エクアドル",
+   "color": "#c8b1b0",
+   "faction": "neutral",
+   "industry": 0.1,
+   "shipbuilding": 0.05,
+   "stability": 0.5
+  },
+  "GUA": {
+   "name": "グアテマラ",
+   "color": "#b0c8b8",
+   "faction": "neutral",
+   "industry": 0.05,
+   "shipbuilding": 0.05,
+   "stability": 0.6
+  },
+  "HON": {
+   "name": "ホンジュラス",
+   "color": "#bfb0c8",
+   "faction": "neutral",
+   "industry": 0.05,
+   "shipbuilding": 0.05,
+   "stability": 0.6
+  },
+  "ELS": {
+   "name": "エルサルバドル",
+   "color": "#c8c6b0",
+   "faction": "neutral",
+   "industry": 0.05,
+   "shipbuilding": 0.05,
+   "stability": 0.6
+  },
+  "NIC": {
+   "name": "ニカラグア",
+   "color": "#b0c3c8",
+   "faction": "neutral",
+   "industry": 0.05,
+   "shipbuilding": 0.05,
+   "stability": 0.6
+  },
+  "COS": {
+   "name": "コスタリカ",
+   "color": "#c8b0bc",
+   "faction": "neutral",
+   "industry": 0.05,
+   "shipbuilding": 0.05,
+   "stability": 0.6
+  },
+  "PAN": {
+   "name": "パナマ",
+   "color": "#b5c8b0",
+   "faction": "neutral",
+   "industry": 0.05,
+   "shipbuilding": 0.05,
+   "stability": 0.6
+  },
+  "HAI": {
+   "name": "ハイチ",
+   "color": "#b2b0c8",
+   "faction": "neutral",
+   "industry": 0.05,
+   "shipbuilding": 0.05,
+   "stability": 0.5
+  },
+  "DOM": {
+   "name": "ドミニカ共和国",
+   "color": "#c8b9b0",
+   "faction": "neutral",
+   "industry": 0.05,
+   "shipbuilding": 0.05,
+   "stability": 0.6
+  }
+ },
+ "wars": [
+  {
+   "date": "1939-09-01",
+   "a": [
+    "JAP"
+   ],
+   "b": [
+    "CHN"
+   ],
+   "note": "日中戦争(1937年から継続)"
+  },
+  {
+   "date": "1939-09-01",
+   "a": [
+    "GER",
+    "SLO"
+   ],
+   "b": [
+    "POL"
+   ],
+   "note": "ポーランド侵攻"
+  },
+  {
+   "date": "1939-09-03",
+   "a": [
+    "UK",
+    "FRA",
+    "AST",
+    "NZL",
+    "IND"
+   ],
+   "b": [
+    "GER"
+   ],
+   "note": "英仏の対独宣戦"
+  },
+  {
+   "date": "1939-09-06",
+   "a": [
+    "SAF"
+   ],
+   "b": [
+    "GER"
+   ]
+  },
+  {
+   "date": "1939-09-10",
+   "a": [
+    "CAN"
+   ],
+   "b": [
+    "GER"
+   ]
+  },
+  {
+   "date": "1940-04-09",
+   "a": [
+    "GER"
+   ],
+   "b": [
+    "DEN",
+    "NOR"
+   ],
+   "note": "ヴェーザー演習作戦"
+  },
+  {
+   "date": "1940-05-10",
+   "a": [
+    "GER"
+   ],
+   "b": [
+    "HOL",
+    "NEI",
+    "BEL",
+    "LUX"
+   ],
+   "note": "西方電撃戦"
+  },
+  {
+   "date": "1940-06-10",
+   "a": [
+    "ITA"
+   ],
+   "b": [
+    "UK",
+    "FRA",
+    "POL",
+    "CAN",
+    "AST",
+    "NZL",
+    "SAF",
+    "IND"
+   ],
+   "note": "イタリア参戦"
+  },
+  {
+   "date": "1940-06-18",
+   "a": [
+    "FFR"
+   ],
+   "b": [
+    "GER",
+    "ITA"
+   ],
+   "note": "ド・ゴールの呼びかけ(自由フランス)"
+  },
+  {
+   "date": "1940-10-28",
+   "a": [
+    "ITA"
+   ],
+   "b": [
+    "GRE"
+   ],
+   "note": "希伊戦争"
+  },
+  {
+   "date": "1941-04-06",
+   "a": [
+    "GER",
+    "ITA",
+    "HUN",
+    "BUL"
+   ],
+   "b": [
+    "YUG"
+   ],
+   "note": "ユーゴスラビア侵攻"
+  },
+  {
+   "date": "1941-04-06",
+   "a": [
+    "GER",
+    "BUL"
+   ],
+   "b": [
+    "GRE"
+   ],
+   "note": "ギリシャ侵攻"
+  },
+  {
+   "date": "1941-06-22",
+   "a": [
+    "GER",
+    "ITA",
+    "ROM",
+    "SLO",
+    "FIN",
+    "HUN"
+   ],
+   "b": [
+    "SOV"
+   ],
+   "note": "独ソ戦(フィンランド・ハンガリーは数日後だが同日にまとめた)"
+  },
+  {
+   "date": "1941-12-06",
+   "a": [
+    "UK",
+    "CAN",
+    "AST",
+    "NZL",
+    "SAF",
+    "IND"
+   ],
+   "b": [
+    "FIN",
+    "HUN",
+    "ROM"
+   ],
+   "note": "英国と自治領の対フィンランド・ハンガリー・ルーマニア宣戦"
+  },
+  {
+   "date": "1941-12-08",
+   "a": [
+    "JAP"
+   ],
+   "b": [
+    "USA",
+    "HOL",
+    "NEI",
+    "UK",
+    "CAN",
+    "AST",
+    "NZL",
+    "SAF",
+    "IND"
+   ],
+   "note": "太平洋戦争"
+  },
+  {
+   "date": "1941-12-08",
+   "a": [
+    "FFR"
+   ],
+   "b": [
+    "JAP"
+   ],
+   "note": "自由フランスの対日宣戦"
+  },
+  {
+   "date": "1941-12-09",
+   "a": [
+    "CHN"
+   ],
+   "b": [
+    "GER",
+    "ITA"
+   ]
+  },
+  {
+   "date": "1941-12-11",
+   "a": [
+    "GER",
+    "ITA"
+   ],
+   "b": [
+    "USA"
+   ],
+   "note": "独伊の対米宣戦"
+  },
+  {
+   "date": "1941-12-12",
+   "a": [
+    "HUN",
+    "ROM",
+    "BUL",
+    "SLO"
+   ],
+   "b": [
+    "USA"
+   ]
+  },
+  {
+   "date": "1941-12-13",
+   "a": [
+    "BUL"
+   ],
+   "b": [
+    "UK",
+    "CAN",
+    "AST",
+    "NZL",
+    "SAF",
+    "IND"
+   ]
+  },
+  {
+   "date": "1941-12-08",
+   "a": [
+    "SIA"
+   ],
+   "b": [
+    "UK",
+    "USA",
+    "IND"
+   ],
+   "note": "タイが日本軍の通過を認め、米英と交戦(史実の宣戦は1942年1月25日)"
+  },
+  {
+   "date": "1944-09-05",
+   "a": [
+    "SOV"
+   ],
+   "b": [
+    "BUL"
+   ]
+  },
+  {
+   "date": "1945-08-09",
+   "a": [
+    "SOV"
+   ],
+   "b": [
+    "JAP"
+   ],
+   "note": "ソ連の対日参戦"
+  }
+ ],
+ "stateOverrides": {
+  "843": {
+   "invulnerable": true
+  },
+  "869": {
+   "invulnerable": true
+  },
+  "934": {
+   "invulnerable": true
+  }
+ },
+ "landingRestrictions": [
+  {
+   "defender": "ITA",
+   "coreOnly": true,
+   "blockedWhileHeldBy": "axis",
+   "region": [
+    1788,
+    1809,
+    1829,
+    1845,
+    1888,
+    1926,
+    1938,
+    1979,
+    1994,
+    2030,
+    2079,
+    2088,
+    2092,
+    2138,
+    2143,
+    2153,
+    2157,
+    2161,
+    2162,
+    2165,
+    2166,
+    2167,
+    2175,
+    2176,
+    2202,
+    2218,
+    2219,
+    2228,
+    2234,
+    2241,
+    2242,
+    2247,
+    2255,
+    2256,
+    2257,
+    2265,
+    2266,
+    2267,
+    2271,
+    2298,
+    2316,
+    2327,
+    2331,
+    2332,
+    2339,
+    2342,
+    2350,
+    2351,
+    2352,
+    2353,
+    2362,
+    2363,
+    2367,
+    2384,
+    2389,
+    2393,
+    2394,
+    2400,
+    2405,
+    2409,
+    2415,
+    2420,
+    2426,
+    2432,
+    2433,
+    2438,
+    2444,
+    2445,
+    2458,
+    2479,
+    2480,
+    2488,
+    2492,
+    2499,
+    2514,
+    2519,
+    2520,
+    2538,
+    2539,
+    2540,
+    2544,
+    2545,
+    2551,
+    2560,
+    2562,
+    2571,
+    2572,
+    2578,
+    2579,
+    2629,
+    2671,
+    2687,
+    2695,
+    2710,
+    2717,
+    2760,
+    2818,
+    2879,
+    2895
+   ],
+   "note": "イタリア本土への上陸は、リビアとチュニジアに枢軸国のステートがなくなってから(ユーザーの指示。以前は北アフリカ全域)"
+  },
+  {
+   "defender": "JAP",
+   "coreOnly": true,
+   "protect": [
+    1100,
+    1248,
+    1298,
+    1299,
+    1341,
+    1394,
+    1450,
+    1609,
+    1682,
+    1738,
+    1750,
+    1793,
+    1794,
+    1812,
+    1844,
+    1858,
+    1905,
+    1924,
+    1929,
+    1932,
+    1933,
+    1953,
+    1961,
+    1966,
+    1977,
+    1992,
+    2025,
+    2034,
+    2039,
+    2060,
+    2173
+   ],
+   "blockedWhileHeldBy": "axis",
+   "region": [
+    2337,
+    2026
+   ],
+   "note": "日本本土(本州・九州・四国・北海道)への上陸は、沖縄と硫黄島がともに陥落してから"
+  }
+ ],
+ "transfers": [
+  {
+   "date": "1940-08-26",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "チャド",
+   "boxes": [
+    [
+     13.5,
+     7.4,
+     24.0,
+     23.5
+    ]
+   ]
+  },
+  {
+   "date": "1940-08-27",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "フランス領カメルーン",
+   "boxes": [
+    [
+     8.5,
+     1.6,
+     16.2,
+     13.1
+    ]
+   ]
+  },
+  {
+   "date": "1940-08-28",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "中部コンゴ・ウバンギ=シャリ",
+   "boxes": [
+    [
+     14.5,
+     -5.1,
+     18.7,
+     3.7
+    ],
+    [
+     11.2,
+     -5.1,
+     14.5,
+     -2.5
+    ],
+    [
+     14.4,
+     2.2,
+     27.5,
+     11.0
+    ]
+   ]
+  },
+  {
+   "date": "1940-09-02",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "フランス領ポリネシア",
+   "boxes": [
+    [
+     -155,
+     -28,
+     -134,
+     -7
+    ]
+   ]
+  },
+  {
+   "date": "1940-09-09",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "フランス領インド",
+   "boxes": [
+    [
+     79.5,
+     10.5,
+     80.0,
+     12.2
+    ],
+    [
+     88.2,
+     22.7,
+     88.5,
+     23.0
+    ]
+   ]
+  },
+  {
+   "date": "1940-09-19",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "ニューカレドニア",
+   "boxes": [
+    [
+     163.5,
+     -23.0,
+     168.5,
+     -19.5
+    ]
+   ]
+  },
+  {
+   "date": "1940-09-22",
+   "from": "FRA",
+   "to": "JAP",
+   "name": "北部仏印",
+   "boxes": [
+    [
+     100.0,
+     17.5,
+     110.0,
+     23.5
+    ]
+   ],
+   "text": "日本軍が北部仏印に進駐"
+  },
+  {
+   "date": "1940-11-10",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "ガボン",
+   "boxes": [
+    [
+     8.7,
+     -4.0,
+     14.6,
+     2.4
+    ]
+   ]
+  },
+  {
+   "date": "1941-07-14",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "シリア・レバノン",
+   "boxes": [
+    [
+     35.0,
+     32.3,
+     42.5,
+     37.4
+    ]
+   ]
+  },
+  {
+   "date": "1941-07-28",
+   "from": "FRA",
+   "to": "JAP",
+   "name": "南部仏印",
+   "boxes": [
+    [
+     100.0,
+     8.0,
+     110.0,
+     17.5
+    ]
+   ],
+   "text": "日本軍が南部仏印に進駐"
+  },
+  {
+   "date": "1941-12-24",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "サンピエール・ミクロン",
+   "boxes": [
+    [
+     -56.5,
+     46.7,
+     -56.1,
+     47.2
+    ]
+   ]
+  },
+  {
+   "date": "1942-11-13",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "フランス領北アフリカ(アルジェリア・モロッコ)",
+   "boxes": [
+    [
+     -13.2,
+     18.9,
+     7.5,
+     37.2
+    ],
+    [
+     7.5,
+     18.9,
+     12.0,
+     30.0
+    ]
+   ]
+  },
+  {
+   "date": "1942-11-23",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "フランス領西アフリカ",
+   "boxes": [
+    [
+     -17.6,
+     4.3,
+     16.0,
+     27.3
+    ]
+   ]
+  },
+  {
+   "date": "1942-11-30",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "レユニオン",
+   "boxes": [
+    [
+     55.1,
+     -21.5,
+     55.9,
+     -20.8
+    ]
+   ]
+  },
+  {
+   "date": "1942-12-28",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "フランス領ソマリランド",
+   "boxes": [
+    [
+     41.7,
+     10.9,
+     43.5,
+     12.8
+    ]
+   ]
+  },
+  {
+   "date": "1943-01-08",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "マダガスカル",
+   "boxes": [
+    [
+     43.0,
+     -26.0,
+     51.0,
+     -11.3
+    ]
+   ]
+  },
+  {
+   "date": "1943-03-17",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "フランス領ギアナ",
+   "boxes": [
+    [
+     -54.7,
+     2.0,
+     -51.5,
+     5.9
+    ]
+   ]
+  },
+  {
+   "date": "1943-05-13",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "チュニジア",
+   "boxes": [
+    [
+     7.5,
+     30.0,
+     11.7,
+     37.6
+    ]
+   ]
+  },
+  {
+   "date": "1943-07-14",
+   "from": "FRA",
+   "to": "FFR",
+   "name": "マルティニーク・グアドループ",
+   "boxes": [
+    [
+     -61.9,
+     14.3,
+     -60.8,
+     16.6
+    ]
+   ]
+  }
+ ]
+}

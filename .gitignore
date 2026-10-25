@@ -1,0 +1,10 @@
+node_modules
+dist
+data/raw
+.debug
+tune*.json
+# Development-only material (not part of the public project)
+work
+notes
+map-preview.html
+NEXT_STEPS.md

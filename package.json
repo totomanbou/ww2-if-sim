@@ -1,0 +1,38 @@
+{
+  "name": "ww2-if-sim",
+  "private": true,
+  "version": "0.1.0",
+  "description": "第二次世界大戦 IF観察シミュレーター: 1939年9月1日から国ごとの設定を変えて大戦の推移を観察するブラウザアプリ",
+  "type": "module",
+  "license": "GPL-3.0-only",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "fetch-sources": "tsx scripts/fetch-sources.ts",
+    "build-map": "tsx scripts/build-map.ts",
+    "check-map": "tsx scripts/check-map.ts",
+    "update-preset-ids": "tsx scripts/update-preset-ids.ts",
+    "update-important-cities": "tsx scripts/update-important-cities.ts",
+    "update-terrain": "tsx scripts/update-terrain.ts",
+    "test": "vitest run",
+    "sim-once": "tsx scripts/run-once.ts",
+    "batch": "tsx scripts/batch.ts"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "^1.0.13",
+    "@types/d3-geo": "^3.1.1",
+    "@types/node": "^26.6.5",
+    "@types/topojson-client": "^3.1.5",
+    "@types/topojson-server": "^3.0.4",
+    "@types/topojson-simplify": "^3.0.3",
+    "d3-geo": "^3.1.1",
+    "topojson-client": "^3.1.0",
+    "topojson-server": "^3.0.1",
+    "topojson-simplify": "^3.0.3",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.5",
+    "vitest": "^3.2.7"
+  }
+}
