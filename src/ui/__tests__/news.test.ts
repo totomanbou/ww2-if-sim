@@ -161,8 +161,8 @@ describe("historical headlines through 1941-12-31", () => {
   });
 });
 
-function casualtyState(losses: SimState["losses"], peoplePerLoss = 37_000): SimState {
-  return { losses, config: { peoplePerLoss } } as SimState;
+function casualtyState(losses: SimState["losses"], peoplePerArmyLoss = 12_000, peoplePerNavyLoss = 370): SimState {
+  return { losses, config: { peoplePerArmyLoss, peoplePerNavyLoss } } as unknown as SimState;
 }
 
 describe("formatPeople", () => {
@@ -185,29 +185,29 @@ describe("deathToll", () => {
   });
 
   it.each([
-    { axis: { army: 1, navy: 0 }, allies: { army: 0, navy: 0 } },
-    { axis: { army: 0, navy: 1 }, allies: { army: 0, navy: 0 } },
-    { axis: { army: 0, navy: 0 }, allies: { army: 1, navy: 0 } },
-    { axis: { army: 0, navy: 0 }, allies: { army: 0, navy: 1 } },
-  ])("includes each individual loss counter: %j", (losses) => {
-    expect(deathToll(casualtyState(losses))).toBe(37_000);
+    { losses: { axis: { army: 1, navy: 0 }, allies: { army: 0, navy: 0 } }, expected: 12_000 },
+    { losses: { axis: { army: 0, navy: 1 }, allies: { army: 0, navy: 0 } }, expected: 370 },
+    { losses: { axis: { army: 0, navy: 0 }, allies: { army: 1, navy: 0 } }, expected: 12_000 },
+    { losses: { axis: { army: 0, navy: 0 }, allies: { army: 0, navy: 1 } }, expected: 370 },
+  ])("counts each loss counter with its arm's factor: %j", ({ losses, expected }) => {
+    expect(deathToll(casualtyState(losses))).toBe(expected);
   });
 
-  it.each([37_000, 100, 0])("multiplies all four loss counters by the configured %s people per loss", (peoplePerLoss) => {
-    const sim = casualtyState({ axis: { army: 1.5, navy: 2 }, allies: { army: 3, navy: 4 } }, peoplePerLoss);
-    expect(deathToll(sim)).toBe(10.5 * peoplePerLoss);
+  it.each([[12_000, 370], [100, 1], [0, 0]])("uses the configured %s dead per army loss and %s per navy loss", (perArmy, perNavy) => {
+    const sim = casualtyState({ axis: { army: 1.5, navy: 2 }, allies: { army: 3, navy: 4 } }, perArmy, perNavy);
+    expect(deathToll(sim)).toBe(4.5 * perArmy + 6 * perNavy);
   });
 });
 
 describe("endHeadline", () => {
   it("includes the rounded death toll and exact closing text", () => {
-    const sim = casualtyState({ axis: { army: 1_000, navy: 14 }, allies: { army: 900, navy: 100 } });
-    expect(deathToll(sim)).toBe(74_518_000);
-    expect(endHeadline(sim)).toBe("約7,450万人もの犠牲者を出した第二次世界大戦終結");
+    const sim = casualtyState({ axis: { army: 1_000, navy: 400 }, allies: { army: 900, navy: 480 } });
+    expect(deathToll(sim)).toBe(1_900 * 12_000 + 880 * 370);
+    expect(endHeadline(sim)).toBe("約2,310万人もの犠牲者を出した第二次世界大戦終結");
   });
 
   it("uses the simulation's configured people per loss", () => {
-    const sim = casualtyState({ axis: { army: 1, navy: 2 }, allies: { army: 3, navy: 4 } }, 1_000_000);
-    expect(endHeadline(sim)).toBe("約1,000万人もの犠牲者を出した第二次世界大戦終結");
+    const sim = casualtyState({ axis: { army: 1, navy: 2 }, allies: { army: 3, navy: 4 } }, 2_000_000, 500_000);
+    expect(endHeadline(sim)).toBe("約1,100万人もの犠牲者を出した第二次世界大戦終結"); // 4 × 2,000,000 + 6 × 500,000
   });
 });

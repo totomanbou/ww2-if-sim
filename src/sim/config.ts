@@ -306,10 +306,11 @@ export interface SimConfig {
   fleetBattleLogMin: number;
 
   /**
-   * People per unit of combat losses (sim.losses, army + navy, both sides), for the war's death toll shown at the end
-   * (civilian deaths are implied in this factor).
+   * Military deaths per unit of combat losses (sim.losses, both sides), for the war's death toll shown at the end:
+   * army losses × peoplePerArmyLoss + navy losses × peoplePerNavyLoss (soldiers and sailors only, no civilians).
    */
-  peoplePerLoss: number;
+  peoplePerArmyLoss: number;
+  peoplePerNavyLoss: number;
 
   // ---- Playback (UI) ----
   /** Real seconds per simulated year at 1x speed. */
@@ -615,11 +616,14 @@ export const DEFAULT_CONFIG: SimConfig = {
   },
   fleetEnemyWeights: { JAP: { CHN: 0.1 } },
   fleetBattleLogMin: 5,
-  // User requirement: the end shows "○○人もの犠牲者を出した第二次世界大戦終結" with a historically plausible number.
-  // WWII deaths are estimated at about 70–85 million including civilians; the median total combat losses of the
-  // historical preset are about 2,014 (60 seeds, p10–p90 1,809–2,317), so 37,000 people per unit gives a median of
-  // about 75 million (p10–p90 about 67–86 million).
-  peoplePerLoss: 37000,
+  // User requirement: the end shows "○○人もの犠牲者を出した第二次世界大戦終結" with a historically plausible number, counting
+  // military deaths only (WWII military deaths are estimated at about 21–25 million), and navy deaths at a hundredth of
+  // the earlier common factor (37,000 per unit → 370; sailors were a small share of the dead), the army making up the
+  // rest. Measured (historical preset, 30 seeds): army losses median 1,888 (p10–p90 1,730–1,955), navy 881 (827–955).
+  // 12,000 per army unit and 370 per navy unit give a median of about 23 million (p10–p90 about 21–24 million), of
+  // which about 330,000 at sea.
+  peoplePerArmyLoss: 12000,
+  peoplePerNavyLoss: 370,
 
   secondsPerYear: 10,
   speedMin: 0.5,

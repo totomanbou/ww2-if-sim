@@ -42,10 +42,10 @@ export function headline(e: SimEvent, scenario: Scenario): string | null {
   return null;
 }
 
-/** Total combat losses of both sides (army + navy) converted to people with config.peoplePerLoss. */
+/** Military deaths of both sides: army and navy combat losses converted to people (config.peoplePerArmyLoss / NavyLoss). */
 export function deathToll(sim: SimState): number {
   const { axis, allies } = sim.losses;
-  return (axis.army + axis.navy + allies.army + allies.navy) * sim.config.peoplePerLoss;
+  return (axis.army + allies.army) * sim.config.peoplePerArmyLoss + (axis.navy + allies.navy) * sim.config.peoplePerNavyLoss;
 }
 
 /** People in 万 rounded to 3 significant digits: 74,520,000 → "約7,450万人". */

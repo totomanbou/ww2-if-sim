@@ -55,9 +55,11 @@ describe("cumulative combat losses", () => {
     });
   });
 
-  it("defaults to 37,000 people per loss", () => {
-    expect(DEFAULT_CONFIG.peoplePerLoss).toBe(37_000);
-    expect(prepareFight(true).config.peoplePerLoss).toBe(37_000);
+  it("defaults to 12,000 dead per army loss and 370 per navy loss (military deaths only)", () => {
+    expect(DEFAULT_CONFIG.peoplePerArmyLoss).toBe(12_000);
+    expect(DEFAULT_CONFIG.peoplePerNavyLoss).toBe(370);
+    expect(prepareFight(true).config.peoplePerArmyLoss).toBe(12_000);
+    expect(prepareFight(true).config.peoplePerNavyLoss).toBe(370);
   });
 
   it.each([false, true])("counts each country's actual army decrease (allies attack = %s)", (attacks) => {

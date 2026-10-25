@@ -143,15 +143,16 @@ export class ResultScreen {
   }
 }
 
-/** Total losses per faction and arm, converted to people like the closing headline (config.peoplePerLoss). */
+/** Deaths per faction and arm, converted to people like the closing headline (config.peoplePerArmyLoss / NavyLoss). */
 function lossTable(sim: SimState): HTMLElement {
-  const people = (units: number) => formatPeople(units * sim.config.peoplePerLoss);
+  const { peoplePerArmyLoss, peoplePerNavyLoss } = sim.config;
   const row = (f: "axis" | "allies") =>
     el("tr", {}, el("th", { style: `color:${FACTION_COLORS[f]}` }, FACTION_NAMES[f]),
-      el("td", {}, people(sim.losses[f].army)), el("td", {}, people(sim.losses[f].navy)));
+      el("td", {}, formatPeople(sim.losses[f].army * peoplePerArmyLoss)),
+      el("td", {}, formatPeople(sim.losses[f].navy * peoplePerNavyLoss)));
   return el("div", { class: "losses" },
-    el("div", { class: "toll" }, `犠牲者 ${formatPeople(deathToll(sim))}`),
+    el("div", { class: "toll" }, `犠牲者(軍人) ${formatPeople(deathToll(sim))}`),
     el("table", {},
-      el("tr", {}, el("th", {}, ""), el("th", {}, "陸軍損害"), el("th", {}, "海軍損害")),
+      el("tr", {}, el("th", {}, ""), el("th", {}, "陸軍の死者"), el("th", {}, "海軍の死者")),
       row("axis"), row("allies")));
 }
