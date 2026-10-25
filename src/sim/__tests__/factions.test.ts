@@ -466,7 +466,7 @@ describe("victory targets and factions", () => {
 
     it("still awards the other conditions when one list is empty", () => {
       const s = sim({ London: "NEU", Moscow: "NEU", Honolulu: "NEU" });
-      for (const c of ["Rome", "Berlin", "Tokyo"] as const) s.owner[s.cities[c]] = s.tags.indexOf("ALY");
+      s.capitulated[s.tags.indexOf("AXI")] = 1;
       expect(checkVictory(s)).toBe("allies");
       const t = sim({ Rome: "NEU", Berlin: "NEU", Tokyo: "NEU" });
       for (const c of ["London", "Moscow", "Honolulu"] as const) t.owner[t.cities[c]] = t.tags.indexOf("AXI");

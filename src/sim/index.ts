@@ -8,7 +8,7 @@ export { effectiveIndustry, yearlyGrowth } from "./growth";
 export { computeFronts, invulnerableActive } from "./combat";
 export { lostShare } from "./capitulation";
 export { fleetPower, navyTotals, hasSuperiority } from "./navy";
-export { ALL_CITIES, CITY_NAMES, capitalHeldByAxis, cityHolder, citySide, isFallen, victoryTargets } from "./victory";
+export { ALL_CITIES, CITY_NAMES, alliedVictoryCountries, capitalHeldByAxis, cityHolder, citySide, isFallen, victoryTargets } from "./victory";
 export { FACTION_WAR_NOTE, applyFactions, setFaction } from "./factions";
 export { importantCityFallen } from "./importantCities";
 export { CAPITAL_NAMES, capitalName } from "./capitals";

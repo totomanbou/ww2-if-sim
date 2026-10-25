@@ -9,7 +9,7 @@ export const CITY_NAMES: Record<VictoryCity, string> = {
 
 export const ALL_CITIES = Object.keys(CITY_NAMES) as VictoryCity[];
 
-/** Cities of conditions A and the allied condition (historically London/Moscow/Honolulu and Rome/Berlin/Tokyo). */
+/** Cities selecting the major countries for victory (historically London/Moscow/Honolulu and Rome/Berlin/Tokyo). */
 const TARGET_CITIES: VictoryCity[] = ["London", "Moscow", "Honolulu", "Rome", "Berlin", "Tokyo"];
 
 /**
@@ -21,10 +21,11 @@ export function citySide(sim: SimState, city: VictoryCity): Faction {
 }
 
 /**
- * Victory targets for the current factions. Axis A: the allied-side cities among London, Moscow, Honolulu,
- * Rome, Berlin, Tokyo; allies: the axis-side ones (plus Paris if France is on the axis side). Cities of neutral
- * countries are left out, and a condition without cities cannot be met. Axis B needs Moscow and Paris on the
- * allied side. With the historical factions: A = London, Moscow, Honolulu; allies = Rome, Berlin, Tokyo; B on.
+ * Victory target cities for the current factions. Axis A needs the allied-side cities among London, Moscow, Honolulu,
+ * Rome, Berlin, Tokyo; allies needs the surrender of the original owners of the axis-side ones (plus Paris if
+ * France is on the axis side). Neutral countries are left out, and a condition without targets cannot be met.
+ * Axis B needs Moscow and Paris on the allied side. Historically: A = London, Moscow, Honolulu;
+ * allies = surrender of Italy, Germany, Japan; B on.
  */
 export function victoryTargets(sim: SimState): {
   axisA: VictoryCity[]; allies: VictoryCity[]; axisB: boolean; axisBCapitals: number[];
@@ -38,6 +39,11 @@ export function victoryTargets(sim: SimState): {
     axisBCapitals: sim.config.axisBCapitals.map((t) => sim.tags.indexOf(t))
       .filter((c) => c >= 0 && sim.faction[c] === "allies" && sim.capital[c] >= 0),
   };
+}
+
+/** Major Axis countries that must currently be capitulated, once each, for an Allied victory. */
+export function alliedVictoryCountries(sim: SimState): number[] {
+  return [...new Set(victoryTargets(sim).allies.map((city) => sim.origOwner[sim.cities[city]]))];
 }
 
 /** True if the Axis holds country c's capital (config.axisBCapitals). */
@@ -68,7 +74,8 @@ export function checkVictory(sim: SimState): VictoryCondition | null {
     t.axisBCapitals.every((c) => capitalHeldByAxis(sim, c));
   sim.axisBWeeks = bHolds ? sim.axisBWeeks + stepWeeks(sim.config) : 0;
   if (t.axisA.length && t.axisA.every(f)) return "axisA";
-  if (t.allies.length && t.allies.every(f)) return "allies";
+  const allies = alliedVictoryCountries(sim);
+  if (allies.length && allies.every((c) => sim.capitulated[c])) return "allies";
   if (sim.axisBWeeks >= sim.config.axisBWeeks) return "axisB";
   return null;
 }

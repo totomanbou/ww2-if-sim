@@ -2,7 +2,7 @@ import { FACTION_COLORS, FACTION_NAMES, formatDateJa } from "../data";
 import { LineChart } from "../render/charts";
 import { MapRenderer } from "../render/mapRenderer";
 import {
-  CITY_NAMES, DAY_MS, capitalHeldByAxis, capitalName, createSimulation, formatDate, invulnerableActive, isFallen, step, stepWeeks,
+  CITY_NAMES, DAY_MS, alliedVictoryCountries, capitalHeldByAxis, capitalName, createSimulation, formatDate, invulnerableActive, isFallen, step, stepWeeks,
   tickTime, victoryTargets,
   type EventType, type Scenario, type SimConfig, type SimResult, type SimState,
 } from "../sim";
@@ -329,8 +329,9 @@ export class ObserveScreen {
     };
     const parisAxis = sim.faction[sim.owner[sim.cities.Paris]] === "axis";
     const weeks = sim.axisBWeeks, need = sim.config.axisBWeeks;
-    // Targets follow the factions set up per country (victoryTargets); a condition without cities is shown as such.
+    // Axis targets are cities; Allied targets are countries that must surrender. Both follow the chosen factions.
     const t = victoryTargets(sim);
+    const alliedCountries = alliedVictoryCountries(sim);
     const cities = (list: VictoryCity[]) =>
       el("div", { class: "vc-cities" }, ...(list.length ? list.map(cell) : [el("span", { class: "hint" }, "対象の都市なし(成立しない)")]));
     this.victoryEl.replaceChildren(
@@ -348,7 +349,15 @@ export class ObserveScreen {
             el("div", { class: "bar" }, el("i", { style: `width:${Math.min(100, (100 * weeks) / need)}%` })),
             el("span", {}, `${weeks} / ${need} 週`))]
           : [cities([])])),
-      el("div", { class: "vc" }, el("div", { class: "vc-name allies" }, "連合国"), cities(t.allies)),
+      el("div", { class: "vc" }, el("div", { class: "vc-name allies" }, "連合国"),
+        el("div", { class: "vc-cities" }, ...(alliedCountries.length
+          ? alliedCountries.map((c) => {
+            const surrendered = Boolean(sim.capitulated[c]);
+            const status = surrendered ? "降伏" : "未降伏";
+            return el("span", { class: `city ${surrendered ? "fallen" : ""}`, title: status },
+              sim.names[c], el("b", {}, status));
+          })
+          : [el("span", { class: "hint" }, "対象の国なし(成立しない)")]))),
     );
   }
 

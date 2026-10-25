@@ -1,7 +1,7 @@
 import { FACTION_COLORS, FACTION_NAMES, formatDateJa } from "../data";
 import { LineChart } from "../render/charts";
 import { MapRenderer } from "../render/mapRenderer";
-import { CITY_NAMES, DAY_MS, capitalName, invulnerableActive, isFallen, stepWeeks, type EventType, type SimEvent, type SimState } from "../sim";
+import { CITY_NAMES, DAY_MS, alliedVictoryCountries, capitalName, invulnerableActive, isFallen, stepWeeks, type EventType, type SimEvent, type SimState } from "../sim";
 import type { MapData, VictoryCity } from "../sim/mapTypes";
 import { el } from "./dom";
 import { fleetBadges } from "./fleets";
@@ -36,7 +36,7 @@ export class ResultScreen {
     const title = r.winner === "allies" ? "連合国の勝利" : r.winner === "axis" ? "枢軸国の勝利" : "膠着";
     const cond = r.condition === "axisA" ? "条件A: ロンドン・モスクワ・ホノルルの陥落"
       : r.condition === "axisB" ? `条件B: モスクワ陥落とパリ・${[...sim.config.axisBCapitals.map((t) => capitalName(t))].join("・")}の保持が${sim.config.axisBWeeks}週継続`
-      : r.condition === "allies" ? "ローマ・ベルリン・東京の陥落"
+      : r.condition === "allies" ? `${alliedVictoryCountries(sim).map((c) => sim.names[c]).join("・")}の降伏`
       : "打ち切り日までにどちらの勝利条件も満たされなかった";
     const weeks = (r.endTick + 1) * stepWeeks(sim.config);
     const years = Math.floor(weeks / 52), restWeeks = weeks % 52;
