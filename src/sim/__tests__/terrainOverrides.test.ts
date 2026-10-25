@@ -42,7 +42,7 @@ describe("explicit geographic terrain policies", () => {
     expect(ukraine.length).toBeGreaterThan(20);
     expect(ukraine.filter((s) => map.terrain![s.id] !== 0).map((s) => s.id)).toEqual([]);
     expect(applyTerrainOverrides(map, map.terrain!)).toEqual(map.terrain);
-  });
+  }, 30_000); // reads and checks the whole map (about 4 s alone, slower when the suite runs in parallel)
 
   it("includes the actual border state containing Izmail despite its centre lying in Romania", () => {
     const map = JSON.parse(readFileSync(new URL("../../../data/map.json", import.meta.url), "utf8")) as MapData;

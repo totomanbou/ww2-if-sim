@@ -171,26 +171,60 @@ export class MapRenderer {
     return null;
   }
 
+  /** Zoom to scale `ns` (clamped to the fit scale … 40×) keeping device pixel (px, py) over the same map point. */
+  private zoomAt(px: number, py: number, ns: number) {
+    const minScale = Math.min(this.canvas.width / this.map.width, this.canvas.height / this.map.height);
+    ns = Math.min(minScale * 40, Math.max(minScale, ns));
+    this.ox = px - ((px - this.ox) * ns) / this.scale;
+    this.oy = py - ((py - this.oy) * ns) / this.scale;
+    this.scale = ns;
+  }
+
   private attachInput() {
     let drag: { x: number; y: number; moved: boolean } | null = null;
+    // Pointers currently down (client coordinates), for two-finger pinch zoom on touch screens.
+    const down = new Map<number, { x: number; y: number }>();
+    // During a pinch: the previous finger distance and midpoint (client px).
+    let pinch: { dist: number; mx: number; my: number } | null = null;
+    // Double tap on touch screens fits the map (dblclick is not fired reliably for touch).
+    let lastTap = { t: 0, x: 0, y: 0 };
+    const devicePoint = (x: number, y: number) => {
+      const r = this.canvas.getBoundingClientRect();
+      return [(x - r.left) * this.dpr, (y - r.top) * this.dpr];
+    };
+    const twoFingers = () => {
+      const [a, b] = [...down.values()];
+      return { dist: Math.hypot(a.x - b.x, a.y - b.y), mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2 };
+    };
     this.canvas.addEventListener("wheel", (e) => {
       e.preventDefault();
-      const r = this.canvas.getBoundingClientRect();
-      const px = (e.clientX - r.left) * this.dpr, py = (e.clientY - r.top) * this.dpr;
-      const k = Math.exp(-e.deltaY * 0.0015);
-      const minScale = Math.min(this.canvas.width / this.map.width, this.canvas.height / this.map.height);
-      const ns = Math.min(minScale * 40, Math.max(minScale, this.scale * k));
-      this.ox = px - ((px - this.ox) * ns) / this.scale;
-      this.oy = py - ((py - this.oy) * ns) / this.scale;
-      this.scale = ns;
+      const [px, py] = devicePoint(e.clientX, e.clientY);
+      this.zoomAt(px, py, this.scale * Math.exp(-e.deltaY * 0.0015));
       this.requestDraw();
     }, { passive: false });
     this.canvas.addEventListener("pointerdown", (e) => {
-      drag = { x: e.clientX, y: e.clientY, moved: false };
+      down.set(e.pointerId, { x: e.clientX, y: e.clientY });
       this.canvas.setPointerCapture(e.pointerId);
+      if (down.size === 2) {
+        // A second finger turns the drag into a pinch (and never into a click).
+        pinch = twoFingers();
+        drag = null;
+      } else if (down.size === 1) {
+        drag = { x: e.clientX, y: e.clientY, moved: false };
+      }
     });
     this.canvas.addEventListener("pointermove", (e) => {
-      if (drag) {
+      if (down.has(e.pointerId)) down.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pinch && down.size >= 2) {
+        // Zoom by the change in finger distance about the midpoint, and pan by the midpoint's movement.
+        const now = twoFingers();
+        const [px, py] = devicePoint(now.mx, now.my);
+        this.ox += (now.mx - pinch.mx) * this.dpr;
+        this.oy += (now.my - pinch.my) * this.dpr;
+        if (pinch.dist > 0 && now.dist > 0) this.zoomAt(px, py, this.scale * (now.dist / pinch.dist));
+        pinch = now;
+        this.requestDraw();
+      } else if (drag) {
         const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
         if (Math.abs(dx) + Math.abs(dy) > 3) drag.moved = true;
         if (drag.moved) {
@@ -200,17 +234,39 @@ export class MapRenderer {
           drag.y = e.clientY;
           this.requestDraw();
         }
-      } else if (this.onHoverState) {
+      } else if (this.onHoverState && e.pointerType !== "touch") {
         this.onHoverState(this.stateAt(e.clientX, e.clientY));
       }
     });
-    this.canvas.addEventListener("pointerup", (e) => {
-      if (drag && !drag.moved && this.onClickState) {
-        const id = this.stateAt(e.clientX, e.clientY);
-        if (id !== null) this.onClickState(id);
+    const release = (e: PointerEvent) => {
+      down.delete(e.pointerId);
+      if (pinch) {
+        // Lifting one finger of a pinch continues as a drag with the other (already "moved": no click).
+        if (down.size < 2) pinch = null;
+        const rest = [...down.values()][0];
+        drag = rest ? { x: rest.x, y: rest.y, moved: true } : null;
+        return;
+      }
+      if (e.type === "pointerup" && drag && !drag.moved) {
+        if (e.pointerType === "touch") {
+          const t = performance.now();
+          if (t - lastTap.t < 350 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 30) {
+            lastTap.t = 0;
+            drag = null;
+            this.fit();
+            return;
+          }
+          lastTap = { t, x: e.clientX, y: e.clientY };
+        }
+        if (this.onClickState) {
+          const id = this.stateAt(e.clientX, e.clientY);
+          if (id !== null) this.onClickState(id);
+        }
       }
       drag = null;
-    });
+    };
+    this.canvas.addEventListener("pointerup", release);
+    this.canvas.addEventListener("pointercancel", release);
     this.canvas.addEventListener("dblclick", () => this.fit());
   }
 
