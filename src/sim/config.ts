@@ -117,6 +117,7 @@ export interface SimConfig {
   /**
    * Occupation by an ally on capitulation (tag → ally tag): the remaining territory of a capitulating country goes to
    * this ally (if it has not capitulated and is on the same side) instead of the enemy that receives it otherwise.
+   * Until that occupier is defeated, same-side recaptures also go to it without reviving the surrendered country.
    */
   capitulationOccupier: Record<string, string>;
   /**

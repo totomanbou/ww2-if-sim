@@ -3,6 +3,7 @@ import { fleetPower, routeControlled } from "./navy";
 import { activeLandingBans, blockedLandings, closedLandings } from "./landing";
 import { landingPreference, landingTheatreStates } from "./landingFronts";
 import { canDeployToFront } from "./deployment";
+import { activeCapitulationOccupier } from "./occupation";
 import { nextFloat, type Rng } from "./rng";
 import { CellShares } from "./cells";
 import type { CellMap, SimState } from "./types";
@@ -1397,7 +1398,10 @@ export function applyBattles(sim: SimState, battles: Battle[]): Revival[] {
         // A capitulated country with a successor government (config.successors, e.g. Free France) is not revived:
         // its liberated land goes to the successor.
         const succ = capitulated[orig] ? successorOf(sim, orig) : -1;
+        const occ = capitulated[orig] ? activeCapitulationOccupier(sim, orig) : -1;
         if (succ >= 0) to = succ;
+        // A surrendered country under allied occupation stays surrendered when that side retakes its land.
+        else if (occ >= 0) to = occ;
         else {
           if (capitulated[orig]) {
             revive(sim, orig, to);
@@ -1444,7 +1448,7 @@ export function applyBattles(sim: SimState, battles: Battle[]): Revival[] {
  * Brings back a capitulated country when an ally (`by`) liberates one of its original states: it is at
  * war again with every country of another faction that `by` is at war with, starts with army 0 (it then
  * grows from the industry of the states it holds) and, if it builds ships, one empty fleet at home. It
- * cannot capitulate again until it has held its capital once more (revivedAwaitingCapital).
+ * cannot capitulate again until it has held its capital once more (revivedAwaitingCapital), unless it loses every state.
  */
 export function revive(sim: SimState, c: number, by: number) {
   const nC = sim.tags.length;

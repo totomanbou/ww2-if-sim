@@ -1,5 +1,6 @@
 import { revive, setOwner, successorOf, type Revival } from "./combat";
 import { CAPITULATION_MASK } from "./mask";
+import { activeCapitulationOccupier } from "./occupation";
 import type { SimState } from "./types";
 
 /**
@@ -68,8 +69,8 @@ export function lostShare(sim: SimState, c: number): number {
  * that ally is on the same side and has not capitulated, otherwise the enemy chosen by capitulationRecipient.
  */
 export function capitulationReceiver(sim: SimState, c: number): number {
-  const occ = sim.tags.indexOf(sim.config.capitulationOccupier[sim.tags[c]] ?? "");
-  if (occ >= 0 && occ !== c && !sim.capitulated[occ] && sim.faction[occ] !== "neutral" && sim.faction[occ] === sim.faction[c]) return occ;
+  const occ = activeCapitulationOccupier(sim, c);
+  if (occ >= 0) return occ;
   return capitulationRecipient(sim, c);
 }
 
@@ -93,7 +94,7 @@ export function capitulationRecipient(sim: SimState, c: number): number {
  * Capitulates every country that has lost its capital and at least capitulationThreshold(sim, c) of its
  * original territory, or only its capital for the countries in config.capitulateOnCapitalLoss, or all its
  * continental states (capital or not) for those in config.capitulateOnContinentLoss
- * (revived countries only after they have held their capital again).
+ * (revived countries only after they have held their capital again, or lost every state).
  * Returns [country, recipient] pairs in country order.
  */
 export function checkCapitulations(sim: SimState, revivals: Revival[] = []): [number, number][] {
@@ -112,8 +113,8 @@ export function checkCapitulations(sim: SimState, revivals: Revival[] = []): [nu
       sim.revivedAwaitingCapital[c] = 0;
       continue;
     }
-    // A revived country cannot capitulate again before it has got its capital back.
-    if (sim.revivedAwaitingCapital[c]) continue;
+    // Protect a revived foothold until its capital is recovered, but not a country with no territory left.
+    if (sim.revivedAwaitingCapital[c] && sim.owner.includes(c)) continue;
     const onCapital = sim.config.capitulateOnCapitalLoss.includes(sim.tags[c]);
     if (!onCapital && lostShare(sim, c) < capitulationThreshold(sim, c) - 1e-9) continue;
     const to = capitulationReceiver(sim, c);
@@ -139,7 +140,10 @@ export function capitulate(sim: SimState, c: number, to: number, revivals: Reviv
       let dest = to;
       if (sim.config.liberateToOriginalOwner && orig !== to && orig !== c && faction[orig] !== "neutral" && faction[orig] === faction[to]) {
         const succ = sim.capitulated[orig] ? successorOf(sim, orig) : -1;
+        const occ = sim.capitulated[orig] ? activeCapitulationOccupier(sim, orig) : -1;
         if (succ >= 0) dest = succ;
+        // Occupation is not liberation: surrender must not be undone by returning land to its occupying ally.
+        else if (occ >= 0) dest = occ === c ? to : occ;
         else {
           if (sim.capitulated[orig]) {
             revive(sim, orig, to);
@@ -152,6 +156,7 @@ export function capitulate(sim: SimState, c: number, to: number, revivals: Reviv
     }
   }
   sim.capitulated[c] = 1;
+  sim.revivedAwaitingCapital[c] = 0;
   sim.military[c] = 0;
   sim.fleets = sim.fleets.filter((f) => f.country !== c);
   for (let e = 0; e < nC; e++) {

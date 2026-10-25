@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { capitulationReceiver, capitulationRecipient, checkCapitulations, lostShare } from "../capitulation";
+import { capitulate, capitulationReceiver, capitulationRecipient, checkCapitulations, lostShare } from "../capitulation";
 import { setOwner } from "../combat";
 import { DEFAULT_CONFIG, type SimConfig } from "../config";
 import { step } from "../engine";
@@ -16,10 +16,10 @@ const rules = {
   growthMode: "yearly",
 } satisfies Partial<SimConfig>;
 
-function fixture() {
+function fixture(land: [number, number][] = []) {
   const sim = createSimulation(makeMap({
     owners: ["ITA", "ITA", "ITA", "ITA", "ITA", "ITA", "GER", "UK", "UK", "N", "GER"],
-    land: [],
+    land,
     core: [true, true, true, true, true, false],
     cities: { London: 9, Moscow: 9, Honolulu: 9, Paris: 9, Rome: 9, Berlin: 9, Tokyo: 9 },
   }), makeScenario({
@@ -160,4 +160,60 @@ describe("occupation news through step", () => {
       expect(headline(events[0], sim.scenario)).toBe("【速報】イタリア王国がイギリス連合王国に降伏");
     },
   );
+});
+
+describe("surrender stays in effect during allied occupation", () => {
+  it.each(["GER", "N"])("does not revive Italy when %s retakes one of its former states", (captor) => {
+    const { sim, ita, ger, uk } = fixture([[captor === "GER" ? 6 : 9, 1]]);
+    expect(checkCapitulations(sim)).toEqual([[ita, ger]]);
+    const by = sim.tags.indexOf(captor);
+    sim.faction[by] = "axis";
+    setWar(sim, captor, "UK");
+    sim.military[by] = 1000;
+    sim.military[uk] = 1;
+    sim.config.advanceRate = sim.config.advanceMax = 1;
+
+    step(sim);
+
+    expect(sim.owner[1]).toBe(ger);
+    expect(sim.capitulated[ita]).toBe(1);
+    expect(sim.revivedAwaitingCapital[ita]).toBe(0);
+    expect(sim.events.filter((e) => e.type === "revival" && e.countries[0] === "ITA")).toEqual([]);
+  });
+
+  it("does not revive Italy when its enemy surrenders to Germany and returns Italian land in bulk", () => {
+    const { sim, ita, ger, uk } = fixture();
+    checkCapitulations(sim);
+    const returned: import("../combat").Revival[] = [];
+    capitulate(sim, uk, ger, returned);
+    expect(Array.from(sim.owner.slice(0, 5))).toEqual([ger, ger, ger, ger, ger]);
+    expect(sim.capitulated[ita]).toBe(1);
+    expect(returned).toEqual([]);
+  });
+
+  it("hands occupied Italian land onward when Germany itself surrenders to another ally", () => {
+    const { sim, ita, ger } = fixture();
+    checkCapitulations(sim);
+    const other = sim.tags.indexOf("N");
+    sim.faction[other] = "axis";
+    const returned: import("../combat").Revival[] = [];
+    capitulate(sim, ger, other, returned);
+    expect(sim.owner[4]).toBe(other);
+    expect(sim.capitulated[ita]).toBe(1);
+    expect(returned).toEqual([]);
+  });
+
+  it("still permits ordinary liberation when the occupation rule has been removed", () => {
+    const { sim, ita, ger, uk } = fixture([[6, 1]]);
+    checkCapitulations(sim);
+    sim.config.capitulationOccupier = {};
+    setWar(sim, "GER", "UK");
+    sim.military[ger] = 1000;
+    sim.military[uk] = 1;
+    sim.config.advanceRate = sim.config.advanceMax = 1;
+    step(sim);
+    expect(sim.owner[1]).toBe(ita);
+    expect(sim.capitulated[ita]).toBe(0);
+    expect(sim.events.some((e) => e.type === "revival" && e.countries[0] === "ITA")).toBe(true);
+  });
 });

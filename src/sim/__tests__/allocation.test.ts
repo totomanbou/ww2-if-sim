@@ -207,6 +207,20 @@ function occupiedAlly({
 }
 
 describe("liberated ally revival", () => {
+  it("can capitulate again after losing its last state before recovering its capital", () => {
+    const { sim, b, x } = occupiedAlly();
+    applyBattles(sim, resolveCombat(sim, computeFronts(sim)));
+    expect(sim.capitulated[b]).toBe(0);
+    expect(sim.revivedAwaitingCapital[b]).toBe(1);
+    setOwner(sim, 2, x);
+    expect(sim.owner.includes(b)).toBe(false);
+    expect(checkCapitulations(sim)).toEqual([[b, x]]);
+    expect(sim.capitulated[b]).toBe(1);
+    expect(sim.revivedAwaitingCapital[b]).toBe(0);
+    expect(sim.military[b]).toBe(0);
+    expect(sim.fleets.some((fleet) => fleet.country === b)).toBe(false);
+  });
+
   it("revives a capitulated ally and protects it until its capital is recovered", () => {
     const { sim, a, b, x, y } = occupiedAlly();
     const nC = sim.tags.length;

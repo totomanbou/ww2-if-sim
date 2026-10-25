@@ -237,7 +237,7 @@ export interface SimState {
   /** Notification-only enemy occupation flags; retained when a country capitulates or revives. */
   capitalOccupied: Uint8Array;
   /**
-   * 1 while a revived country has not yet got its capital back; it cannot capitulate again until then
+   * 1 while a revived country has not yet got its capital back; it cannot capitulate again until then while it holds territory
    * (it was revived by an ally liberating one of its states after it had capitulated).
    */
   revivedAwaitingCapital: Uint8Array;
